@@ -2,11 +2,11 @@
 
 MOBILE_DE_ID=$1
 ID=$2
-BACKUP_PATH=$3
+MOBILE_DE_BACKUP_DIR=$3
 
 source ./config.txt
 
-for i in `2 3 4 5 6 7 8 9`; do
+for i in `echo "2 3 4 5 6 7 8 9"`; do
 	IMAGE=$MOBILE_DE_BACKUP_DIR/`echo $MOBILE_DE_ID`_`echo $i`.jpg
 	if [ -s $IMAGE ]; then
 		cp $IMAGE /home/opencart/www.auto-auction-germany.com/image/catalog/aager-demo/$ID-$i.jpg

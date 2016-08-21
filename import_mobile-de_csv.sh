@@ -2,6 +2,8 @@
 
 source ./config.txt
 
+./truncate_oc_products.sh
+
 # mobile.de backup CSV
 MOBILE_DE_BACKUP_DIR=/root/t
 
@@ -71,12 +73,12 @@ while read line; do
 	# 66: Bestandsliste 9(US)
 	if [[ $DESC == *"Verzollt"* ]]
 	then
-		./add_oc_product_to_category $NEXT_ID '66'
+		./add_oc_product_to_category.sh $NEXT_ID '66'
 	fi
 
 	./add_oc_product_images.sh $ID $NEXT_ID $MOBILE_DE_BACKUP_DIR
 	
 	# insert new banner item
-	#./add_oc_product_to_banner.sh "$NAME" "index.php?route=product/product&amp;product_id=$NEXT_ID" "$IMAGE_PATH"
+	./add_oc_product_to_banner.sh "$NAME" "index.php?route=product/product&amp;product_id=$NEXT_ID" "$IMAGE_PATH"
 	
 done < "$MOBILE_DE_BACKUP_DIR/mobile.csv"

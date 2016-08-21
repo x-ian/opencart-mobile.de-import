@@ -47,7 +47,8 @@ INSERT INTO oc_product_attribute VALUES
   (@id,18,1,@mileage_en), (@id,18,2,@mileage_de),
   (@id,19,1,@kw_en), (@id,19,2,@kw_de),
   (@id,20,1,@transmission_en), (@id,20,2,@transmission_de),
-  (@id,21,1,@color_en), (@id,21,2,@color_de);
+  (@id,21,1,@color_en), (@id,21,2,@color_de),
+  (@id,22,1,@fueltype_en), (@id,22,2,@fueltype_de);
 INSERT INTO oc_product_description VALUES 
   (@id,1,@name_en,@desc_en,'',@metatag_en,'',''),
   (@id,2,@name_de,@desc_de,'',@metatag_de,'','');
