@@ -1,0 +1,2 @@
+MYSQL_USER=<oc_user>
+MYSQL_PASSWD=<oc_user_passwd>
