@@ -3,7 +3,7 @@
 source ./config.txt
 
 # mobile.de backup CSV
-FILE=mobile.csv
+MOBILE_DE_BACKUP_DIR=/root/t
 
 while read line; do
 	# parse file
@@ -21,24 +21,27 @@ while read line; do
 	TRANSMISSION_ID=`echo $line | cut -d ';' -f111 | tr -d '"'` # automatik 1, schaltgetriebe 3 ? 
 
 	# get db stuff
-	NEXT_ID=$(mysql -u $MYSQLUSER -p$MYSQL_PASSWD opencart -se "select max(product_id)+1 from oc_product" | cut -f1)
+	NEXT_ID=$(mysql -u $MYSQL_USER -p$MYSQL_PASSWD opencart -se "select max(product_id)+1 from oc_product" | cut -f1)
 
 	# map manufacturer to ID
-	MANUFACTURER_ID=12
+	MANUFACTURER_ID=$(mysql -u $MYSQL_USER -p$MYSQL_PASSWD opencart -se "select ifnull((select manufacturer_id from oc_manufacturer where name like '`echo $MANUFACTURER`'), 15)" | cut -f1)
+	#MANUFACTURER_ID=12
 	
 	# map fuel type
 	FUEL='fuel'
 	TRANSMISSION='manuell'
-	CATEGORY_ID=12
+	CATEGORY_ID=65
 	
 	# copy image
-	cp $ID_1.jpg /home/opencart/www.auto-auction-germany.com/image/catalog/aager-demo/$NEXT_ID.jpg
+#	cp $MOBILE_DE_BACKUP_DIR/`echo $ID`_1.jpg /home/opencart/www.auto-auction-germany.com/image/catalog/aager-demo/$NEXT_ID.jpg
 	IMAGE_PATH="catalog/aager-demo/$NEXT_ID.jpg"
 	
 	# insert new product
-	./add_oc_product.sh $NEXT_ID '' '$NAME' '$NAME' '$DESC' '$DESC' 'meta_en' 'meta_de' \
-		'$IMAGE_PATH' $PRICE $MANUFACTURER_ID $CATEGORY_ID '$COLOR' '$COLOR' '$MILEAGE' '$MILEAGE' '$KW' '$KW' \
-		'$TRANSMISSION' '$TRANSMISSION' '$FUEL' '$FUEL' '$EZ' '$EZ'
+#	./add_oc_product.sh $NEXT_ID "" "$MANUFACTURER $NAME" "$MANUFACTURER $NAME" "$DESC" "$DESC" "$NAME" "$NAME" \
+#		"$IMAGE_PATH" $PRICE $MANUFACTURER_ID $CATEGORY_ID "$COLOR" "$COLOR" "$MILEAGE" "$MILEAGE" "$KW" "$KW" \
+#		"$TRANSMISSION" "$TRANSMISSION" "$FUEL" "$FUEL" "$EZ" "$EZ"
 
-done < "$FILE"
-
+	# insert new banner item
+	./add_oc_product_to_banner.sh "$NAME" "index.php?route=product/product&amp;product_id=$NEXT_ID" "$IMAGE_PATH"
+	
+done < "$MOBILE_DE_BACKUP_DIR/mobile.csv"
