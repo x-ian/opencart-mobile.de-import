@@ -1,2 +1,0 @@
-MYSQL_USER=opencartuser
-MYSQL_PASSWD=opencartuser_passwd
